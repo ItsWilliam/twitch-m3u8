@@ -2,25 +2,40 @@ const https = require('https');
 
 function get(url) {
     return new Promise((resolve, reject) => {
-        https.get(url, (response) => {
-            let data = {};
-            data.statusCode = response.statusCode;
-            data.body = [];
-            response.on('data', (chunk) => data.body.push(chunk));
-            response.on('end', () => {
-                data.body = data.body.join('');
-                resolve(data);
-            });
-        })
+        const nUrl = new URL(url);
+        const options = {
+            host: nUrl.host,
+            hostname: nUrl.hostname,
+            origin: nUrl.origin,
+            path: nUrl.pathname + nUrl.search,
+            href: nUrl.href,
+            headers: {
+                'client-id': clientId,
+            },
+        };
+        /* console.log('clientId', clientId);
+        console.log('options', options); */
+        https.get(options, (response) => {
+            // console.log('response', response);
+                let data = {};
+                data.statusCode = response.statusCode;
+                data.body = [];
+                response.on('data', (chunk) => data.body.push(chunk));
+                response.on('end', () => {
+                    data.body = data.body.join('');
+                    resolve(data);
+                });
+            })
             .on('error', (error) => reject(error));
     });
 }
 
-function getAcessToken(id, vod) {
+function getAccessToken(id, vod) {
     return new Promise((resolve, reject) => {
-        get(`https://api.twitch.tv/api/${vod ? 'vods' : 'channels'}/${id}/access_token?client_id=${clientId}`)
+        get(`https://api.twitch.tv/api/${vod ? 'vods' : 'channels'}/${id}/access_token?oauth_token=undefined&need_https=true&platform=web&player_type=picture-by-picture&player_backend=mediaplayer`)
             .then((data) => {
                 if (data.statusCode != 200) {
+                    // console.log('accessToken', data.body);
                     reject(new Error(`${JSON.parse(data.body).message}`));
                 } else {
                     resolve(JSON.parse(data.body));
@@ -66,7 +81,7 @@ function parsePlaylist(playlist) {
 
 function getStream(channel, raw) {
     return new Promise((resolve, reject) => {
-        getAcessToken(channel)
+        getAccessToken(channel)
             .then((accessToken) => getPlaylist(channel, accessToken))
             .then((playlist) => resolve((raw ? playlist : parsePlaylist(playlist))))
             .catch(error => reject(error));
@@ -75,7 +90,7 @@ function getStream(channel, raw) {
 
 function getVod(vid, raw) {
     return new Promise((resolve, reject) => {
-        getAcessToken(vid, true)
+        getAccessToken(vid, true)
             .then((accessToken) => getPlaylist(vid, accessToken, true))
             .then((playlist) => resolve((raw ? playlist : parsePlaylist(playlist))))
             .catch(error => reject(error));
@@ -89,3 +104,8 @@ module.exports = function (cid) {
         getVod: getVod
     };
 };
+
+/* const twitch = test('kimne78kx3ncx6brgo4mv6wki5h1ko');
+twitch.getStream('mizkif', false).then((result) => {
+    console.log(result);
+}); */
