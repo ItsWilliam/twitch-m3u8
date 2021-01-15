@@ -3,7 +3,7 @@
 
 ## Features
 ⚫ Supports both livestreams and past broadcasts (VODs)    
-⚫ 0 dependencies   
+⚫ 1 dependency (axios) 
 ⚫ Promise-based    
 ⚫ Can return raw .m3u8 data    
 
@@ -16,6 +16,8 @@ npm install twitch-m3u8
 ## Usage
 Twitch Client ID required. Register [here](https://dev.twitch.tv/).
 
+Use this client-id: kimne78kx3ncx6brgo4mv6wki5h1ko
+
 Functions getStream and getVod have an optional second boolean parameter which defaults to false (can be omitted). Setting it to:  
 true - function returns raw .m3u8 data  
 false - function returns an array of JSON objects containing the quality, resolution and URL of the stream  
@@ -23,23 +25,25 @@ false - function returns an array of JSON objects containing the quality, resolu
 // replace clientID with your Twitch Client ID
 const twitch = require('twitch-m3u8')(clientID);
 
+
+
 // returns a JSON object containing available streams of a livestream
-twitch.getStream(streamer)
+twitch.getStream(channelName)
 .then(data => console.log(data))
 .catch(err => console.error(err));
 
 // returns a JSON object containing available streams of a VOD
-twitch.getVod(vodID)
+twitch.getVod(channelName, vodID)
 .then(data => console.log(data))
 .catch(err => console.error(err));
 
 // returns raw .m3u8 data containing available streams of a livestream
-twitch.getStream(streamer, true)
+twitch.getStream(channelName, true)
 .then(data => console.log(data))
 .catch(err => console.error(err));
 
 // returns raw .m3u8 data containing available streams of a VOD
-twitch.getVod(vodID, true)
+twitch.getVod(channelName, vodID, true)
 .then(data => console.log(data))
 .catch(err => console.error(err));
 ```
