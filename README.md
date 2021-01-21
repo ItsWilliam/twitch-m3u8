@@ -33,7 +33,7 @@ twitch.getStream(channelName)
 .catch(err => console.error(err));
 
 // returns a JSON object containing available streams of a VOD
-twitch.getVod(channelName, vodID)
+twitch.getVod(vodID)
 .then(data => console.log(data))
 .catch(err => console.error(err));
 
@@ -43,7 +43,7 @@ twitch.getStream(channelName, true)
 .catch(err => console.error(err));
 
 // returns raw .m3u8 data containing available streams of a VOD
-twitch.getVod(channelName, vodID, true)
+twitch.getVod(vodID, true)
 .then(data => console.log(data))
 .catch(err => console.error(err));
 ```

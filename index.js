@@ -61,7 +61,7 @@ function makeGraphQlPacket(channel, vod, id = "") {
         variables: {
             "isLive": !vod,
             "isVod": vod,
-            "login": channel,
+            "login": channel ? channel : "",
             "playerType": "site",
             "vodID": id,
         },
@@ -143,9 +143,9 @@ function getStream(channel, raw) {
     });
 }
 
-function getVod(channel, vid, raw) {
+function getVod(vid, raw) {
     return new Promise((resolve, reject) => {
-        getAccessToken(channel, true, vid)
+        getAccessToken(null, true, vid)
             .then((accessToken) => getPlaylist(vid, accessToken, true))
             .then((playlist) => resolve((raw ? playlist : parsePlaylist(playlist))))
             .catch(error => reject(error));
@@ -167,7 +167,7 @@ twitch.getStream('mizkif', false).then((result) => {
     console.log('error', error.message);
 });
 
-twitch.getVod('mizkif', '872482730', false).then((result) => {
+twitch.getVod('872482730', false).then((result) => {
     console.log('mizkif vod', result);
 }).catch((error) => {
     console.log('error', error.message);
