@@ -4,6 +4,10 @@
   "description": "Get the stream URL of a Twitch livestream or past broadcast (VOD)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "index.js"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
