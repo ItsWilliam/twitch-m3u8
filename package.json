@@ -2,10 +2,15 @@
   "name": "twitch-m3u8",
   "version": "1.0.6",
   "description": "Get the stream URL of a Twitch livestream or past broadcast (VOD)",
-  "main": "index.js",
-  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rmdir /s dist",
+    "lint": "eslint --ignore-path .gitignore --ext .ts --ext .js .",
+    "lintfix": "npm run lint -- --fix",
+    "precommit": "npm run clean && npm run build && npm run lintfix"
   },
   "author": "Samuel Dudik <samuel.dudik@gmail.com>",
   "license": "MIT",

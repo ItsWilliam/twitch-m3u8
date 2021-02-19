@@ -3,7 +3,6 @@
 
 ## Features
 ⚫ Supports both livestreams and past broadcasts (VODs)    
-⚫ 1 dependency (axios) 
 ⚫ Promise-based    
 ⚫ Can return raw .m3u8 data    
 
