@@ -161,7 +161,7 @@ export default function (cid: string) {
         return parsedPlaylist;
     }
     
-    function getStream(channel: string, raw: boolean) {
+    function getStream(channel: string, raw: boolean = false) {
         return new Promise((resolve, reject) => {
             getAccessToken(channel, false)
                 .then((accessToken) => getPlaylist(channel, accessToken))
@@ -170,7 +170,7 @@ export default function (cid: string) {
         });
     }
     
-    function getVod(vid: string | number, raw: boolean) {
+    function getVod(vid: string | number, raw: boolean = false) {
         return new Promise((resolve, reject) => {
             getAccessToken(null, true, vid)
                 .then((accessToken) => getPlaylist(vid, accessToken, true))
