@@ -24,7 +24,7 @@ export interface GraphQlPacket {
 }
 
 
-export default function (cid: string): { getVod: typeof getVod, getStream: typeof getStream } {
+export default function test (cid: string): { getVod: typeof getVod, getStream: typeof getStream } {
     const clientId = cid;
 
     function get(url: string): Promise<AxiosResponse> {
@@ -161,7 +161,7 @@ export default function (cid: string): { getVod: typeof getVod, getStream: typeo
         return parsedPlaylist;
     }
     
-    function getStream(channel: string, raw: boolean = false) {
+    function getStream(channel: string, raw: boolean = false): Promise<string | StreamData[]> {
         return new Promise((resolve, reject) => {
             getAccessToken(channel, false)
                 .then((accessToken) => getPlaylist(channel, accessToken))
@@ -170,7 +170,7 @@ export default function (cid: string): { getVod: typeof getVod, getStream: typeo
         });
     }
     
-    function getVod(vid: string | number, raw: boolean = false) {
+    function getVod(vid: string | number, raw: boolean = false): Promise<string | StreamData[]> {
         return new Promise((resolve, reject) => {
             getAccessToken(null, true, vid)
                 .then((accessToken) => getPlaylist(vid, accessToken, true))
@@ -186,7 +186,7 @@ export default function (cid: string): { getVod: typeof getVod, getStream: typeo
     
 };
 
-/* const twitch = test('kimne78kx3ncx6brgo4mv6wki5h1ko');
+const twitch = test('kimne78kx3ncx6brgo4mv6wki5h1ko');
 twitch.getStream('mizkif', false).then((result: any) => {
     console.log('mizkif stream', result);
 }).catch((error: { message: any; }) => {
@@ -197,4 +197,4 @@ twitch.getVod('872482730', false).then((result: any) => {
     console.log('mizkif vod', result);
 }).catch((error: { message: any; }) => {
     console.log('error', error.message);
-}); */
+});
