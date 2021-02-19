@@ -24,7 +24,7 @@ export interface GraphQlPacket {
 }
 
 
-export default function (cid: string) {
+export default function (cid: string): { getVod: typeof getVod, getStream: typeof getStream } {
     const clientId = cid;
 
     function get(url: string): Promise<AxiosResponse> {
