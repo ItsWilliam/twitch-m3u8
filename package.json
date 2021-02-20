@@ -2,8 +2,11 @@
   "name": "twitch-m3u8",
   "version": "1.0.6",
   "description": "Get the stream URL of a Twitch livestream or past broadcast (VOD)",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist",
+  "types": "dist",
+  "exports": {
+    ".": "./dist/index.js"
+  },
   "files": [
     "dist"
   ],
@@ -20,7 +23,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/woafu/twitch-m3u8"
+    "url": "https://github.com/itswilliam/twitch-m3u8.git"
   },
   "keywords": [
     "twitch",
