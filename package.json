@@ -4,6 +4,7 @@
   "description": "Get the stream URL of a Twitch livestream or past broadcast (VOD)",
   "main": "dist",
   "types": "dist",
+  "type": "module",
   "exports": {
     ".": "./dist/index.js"
   },
